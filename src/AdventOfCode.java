@@ -20,30 +20,26 @@ public class AdventOfCode {
     }
 
     public static void day1() {
-        String filePath = "files/Elfy.txt";
-        String line;
+        String filePath = "files/day1.txt";
         int max = 0;
         int currentMax = 0;
+        List<String> lines = readFile(filePath);
         List<Integer> calories = new ArrayList<>();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
-            while ((line = bufferedReader.readLine()) != null) {
-                if (!line.equals("")) {
-                    currentMax += Integer.parseInt(line);
-                } else {
-                    if (currentMax > max) {
-                        max = currentMax;
-                    }
-                    calories.add(currentMax);
-                    currentMax = 0;
+
+        for (String calorie : lines) {
+            if (!calorie.isEmpty()) {
+                currentMax += Integer.parseInt(calorie);
+            } else {
+                if (currentMax > max) {
+                    max = currentMax;
                 }
+                calories.add(currentMax);
+                currentMax = 0;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         calories.sort(Comparator.reverseOrder());
-
         int topThreeSum = 0;
         for (int i = 0; i < 3; i++) {
             topThreeSum += calories.get(i);
@@ -54,5 +50,22 @@ public class AdventOfCode {
     }
 
     public static void day2() {
+        String filePath = "files/day2.txt";
+    }
+
+    public static List<String> readFile(String filePath) {
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lines;
     }
 }
