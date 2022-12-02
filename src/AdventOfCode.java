@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class AdventOfCode {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String ERROR = "Error!";
 
     public static void main(String[] args) {
         System.out.println("Wybierz dzień:");
@@ -51,6 +52,42 @@ public class AdventOfCode {
 
     public static void day2() {
         String filePath = "files/day2.txt";
+        List<String> lines = readFile(filePath);
+        int points = 0;
+
+        for (String line : lines) {
+            char[] game = line.toCharArray();
+
+            switch (game[0]) { //win - 6, draw - 3, lost - 0
+                case 'A' -> {
+                    switch (game[2]) {
+                        case 'X' -> points += 3;
+                        case 'Y' -> points += 4;
+                        case 'Z' -> points += 8;
+                        default -> System.out.println(ERROR);
+                    }
+                }
+                case 'B' -> { //paper, X - rock, 1, Y - paper, 2, Z - scissors, 3
+                    switch (game[2]) {
+                        case 'X' -> points += 1;
+                        case 'Y' -> points += 5;
+                        case 'Z' -> points += 9;
+                        default -> System.out.println(ERROR);
+                    }
+                }
+                case 'C' -> { //scissors, X - rock, 1, Y - paper, 2, Z - scissors, 3
+                    switch (game[2]) {
+                        case 'X' -> points += 2;
+                        case 'Y' -> points += 6;
+                        case 'Z' -> points += 7;
+                        default -> System.out.println(ERROR);
+                    }
+                }
+                default -> System.out.println(ERROR);
+            }
+        }
+
+        System.out.println("Your score: " + points);
     }
 
     public static List<String> readFile(String filePath) {
