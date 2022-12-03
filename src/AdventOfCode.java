@@ -6,17 +6,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AdventOfCode {
-    private static final Scanner scanner = new Scanner(System.in);
     private static final String ERROR = "Error!";
 
     public static void main(String[] args) {
-        System.out.println("Wybierz dzień:");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Choose day:");
         int dayNumber = scanner.nextInt();
 
         switch (dayNumber) {
             case 1 -> day1();
             case 2 -> day2();
-            default -> System.out.println("Brak dnia o tym numerze!");
+            default -> System.err.println(ERROR);
         }
     }
 
@@ -64,7 +65,7 @@ public class AdventOfCode {
                         case 'X' -> points += 3;
                         case 'Y' -> points += 4;
                         case 'Z' -> points += 8;
-                        default -> System.out.println(ERROR);
+                        default -> System.err.println(ERROR);
                     }
                 }
                 case 'B' -> { //paper, X - rock, 1, Y - paper, 2, Z - scissors, 3
@@ -72,7 +73,7 @@ public class AdventOfCode {
                         case 'X' -> points += 1;
                         case 'Y' -> points += 5;
                         case 'Z' -> points += 9;
-                        default -> System.out.println(ERROR);
+                        default -> System.err.println(ERROR);
                     }
                 }
                 case 'C' -> { //scissors, X - rock, 1, Y - paper, 2, Z - scissors, 3
@@ -80,10 +81,10 @@ public class AdventOfCode {
                         case 'X' -> points += 2;
                         case 'Y' -> points += 6;
                         case 'Z' -> points += 7;
-                        default -> System.out.println(ERROR);
+                        default -> System.err.println(ERROR);
                     }
                 }
-                default -> System.out.println(ERROR);
+                default -> System.err.println(ERROR);
             }
         }
 
@@ -95,14 +96,12 @@ public class AdventOfCode {
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
             String line;
-
             while ((line = bufferedReader.readLine()) != null) {
                 lines.add(line);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return lines;
     }
 }
