@@ -1,9 +1,10 @@
+import com.google.common.collect.Lists;
+import org.checkerframework.checker.units.qual.A;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AdventOfCode {
     private static final String ERROR = "Error!";
@@ -17,6 +18,7 @@ public class AdventOfCode {
         switch (dayNumber) {
             case 1 -> day1();
             case 2 -> day2();
+            case 3 -> day3();
             default -> System.err.println(ERROR);
         }
     }
@@ -89,6 +91,55 @@ public class AdventOfCode {
         }
 
         System.out.println("Your score: " + points);
+    }
+
+    public static void day3() {
+        String filePath = "files/day3.txt";
+        List<String> lines = readFile(filePath);
+        int sum = 0;
+
+        for (String line : lines) {
+            int length = line.length();
+            String part1 = line.substring(0, length / 2);
+            String part2 = line.substring(length / 2);
+            char[] part2Chars = part2.toCharArray();
+
+            for (char letter : part2Chars) {
+                if (part1.contains(String.valueOf(letter))) {
+                    if (Character.isUpperCase(letter)) {
+                        sum += letter - 38;
+                    } else {
+                        sum += letter - 96;
+                    }
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Wynik zadania 1: " + sum);
+
+        sum = 0;
+        List<List<String>> lists = Lists.partition(lines, 3);
+
+        for (List<String> list : lists) {
+            String a = list.get(0);
+            String b = list.get(1);
+            String c = list.get(2);
+            char[] d = b.toCharArray();
+
+            for (char letter : d) {
+                if (a.contains(String.valueOf(letter)) && c.contains(String.valueOf(letter))) {
+                    if (Character.isUpperCase(letter)) {
+                        sum += letter - 38;
+                    } else {
+                        sum += letter - 96;
+                    }
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Wynik zadania 2: " + sum);
     }
 
     public static List<String> readFile(String filePath) {
