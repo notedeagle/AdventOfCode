@@ -1,10 +1,9 @@
 import com.google.common.collect.Lists;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AdventOfCode {
     private static final String ERROR = "Error!";
@@ -19,6 +18,7 @@ public class AdventOfCode {
             case 1 -> day1();
             case 2 -> day2();
             case 3 -> day3();
+            case 4 -> day4();
             default -> System.err.println(ERROR);
         }
     }
@@ -118,8 +118,14 @@ public class AdventOfCode {
 
         System.out.println("Wynik zadania 1: " + sum);
 
-        sum = 0;
+        day3Part2();
+    }
+
+    public static void day3Part2() {
+        String filePath = "files/day3.txt";
+        List<String> lines = readFile(filePath);
         List<List<String>> lists = Lists.partition(lines, 3);
+        int sum = 0;
 
         for (List<String> list : lists) {
             String a = list.get(0);
@@ -140,6 +146,58 @@ public class AdventOfCode {
         }
 
         System.out.println("Wynik zadania 2: " + sum);
+    }
+
+    public static void day4() {
+        String filePath = "files/day4.txt";
+        List<String> lines = readFile(filePath);
+        String[] parts;
+        int sum = 0;
+
+        for (String line : lines) {
+            parts = line.split(",");
+            String[] range1 = parts[0].split("-");
+            String[] range2 = parts[1].split("-");
+            List<Integer> numbers1 = IntStream.range(Integer.parseInt(range1[0]), Integer.parseInt(range1[1]) + 1)
+                    .boxed()
+                    .toList();
+            List<Integer> numbers2 = IntStream.range(Integer.parseInt(range2[0]), Integer.parseInt(range2[1]) + 1)
+                    .boxed()
+                    .toList();
+
+            if (new HashSet<>(numbers1).containsAll(numbers2) || new HashSet<>(numbers2).containsAll(numbers1)) {
+                sum++;
+            }
+        }
+
+        System.out.println("Wynik: " + sum);
+
+        day4Part2();
+    }
+
+    public static void day4Part2() {
+        String filePath = "files/day4.txt";
+        List<String> lines = readFile(filePath);
+        String[] parts;
+        int sum = 0;
+
+        for (String line : lines) {
+            parts = line.split(",");
+            String[] range1 = parts[0].split("-");
+            String[] range2 = parts[1].split("-");
+            List<Integer> numbers1 = IntStream.range(Integer.parseInt(range1[0]), Integer.parseInt(range1[1]) + 1)
+                    .boxed()
+                    .toList();
+            List<Integer> numbers2 = IntStream.range(Integer.parseInt(range2[0]), Integer.parseInt(range2[1]) + 1)
+                    .boxed()
+                    .toList();
+
+            if (!Collections.disjoint(numbers1, numbers2)) {
+                sum++;
+            }
+        }
+
+        System.out.println("Wynik część 2: " + sum);
     }
 
     public static List<String> readFile(String filePath) {
