@@ -15,14 +15,8 @@ public class Day4 extends AdventOfCode {
 
         for (String line : input) {
             parts = line.split(",");
-            String[] range1 = parts[0].split("-");
-            String[] range2 = parts[1].split("-");
-            List<Integer> numbers1 = IntStream.range(Integer.parseInt(range1[0]), Integer.parseInt(range1[1]) + 1)
-                    .boxed()
-                    .toList();
-            List<Integer> numbers2 = IntStream.range(Integer.parseInt(range2[0]), Integer.parseInt(range2[1]) + 1)
-                    .boxed()
-                    .toList();
+            List<Integer> numbers1 = getNumbers(parts, 0);
+            List<Integer> numbers2 = getNumbers(parts, 1);
 
             if (new HashSet<>(numbers1).containsAll(numbers2) || new HashSet<>(numbers2).containsAll(numbers1)) {
                 sum++;
@@ -39,14 +33,8 @@ public class Day4 extends AdventOfCode {
 
         for (String line : input) {
             parts = line.split(",");
-            String[] range1 = parts[0].split("-");
-            String[] range2 = parts[1].split("-");
-            List<Integer> numbers1 = IntStream.range(Integer.parseInt(range1[0]), Integer.parseInt(range1[1]) + 1)
-                    .boxed()
-                    .toList();
-            List<Integer> numbers2 = IntStream.range(Integer.parseInt(range2[0]), Integer.parseInt(range2[1]) + 1)
-                    .boxed()
-                    .toList();
+            List<Integer> numbers1 = getNumbers(parts, 0);
+            List<Integer> numbers2 = getNumbers(parts, 1);
 
             if (!Collections.disjoint(numbers1, numbers2)) {
                 sum++;
@@ -54,6 +42,13 @@ public class Day4 extends AdventOfCode {
         }
 
         return String.valueOf(sum);
+    }
+
+    private List<Integer> getNumbers(String[] parts, int part) {
+        String[] range = parts[part].split("-");
+        return IntStream.range(Integer.parseInt(range[0]), Integer.parseInt(range[1]) + 1)
+                .boxed()
+                .toList();
     }
 
     public static void main(String[] args) {
